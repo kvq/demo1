@@ -25,15 +25,16 @@ public class UserLocalRepository {
                 .limit(20).collect(Collectors.toList());
     }
 
-    public void setResult(UserInfo userInfo) {
+    public UserInfo setResult(UserInfo userInfo) {
         UserInfo oldInfo = data.stream()
                 .filter(storedInfo -> storedInfo.getUserId().equals(userInfo.getUserId())
                         && storedInfo.getLevelId().equals(userInfo.getLevelId()))
                 .findAny().orElse(null);
         if (oldInfo != null){
-            data.remove(userInfo);
+            data.remove(oldInfo);
         }
         data.add(userInfo);
+        return userInfo;
     }
 
 }

@@ -12,11 +12,28 @@ import java.util.List;
 public class InfoService {
     private final UserLocalRepository localRepository;
 
-    public List<UserInfo> getTopUserResults(Long id){
+    public List<UserInfo> getTopUserResults(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("No user id provided");
         }
         return localRepository.getTop20ResultsForUser(id);
     }
+
+    public List<UserInfo> getTopLevelResults(Long level) {
+        if (level == null) {
+            throw new IllegalArgumentException("Level was not provided");
+        }
+        return localRepository.getTop20ResultsForLevel(level);
+    }
+
+    public UserInfo setResult(UserInfo userInfo) {
+        if (userInfo == null
+                || userInfo.getUserId() == null
+                || userInfo.getLevelId() == null) {
+            throw new IllegalArgumentException("User info is invalid or missing");
+        }
+        return localRepository.setResult(userInfo);
+    }
+
 
 }
